@@ -1,23 +1,26 @@
 class Scraper
-  GO_WINE = "https://www.go-wine.com/us-wineries"
+  WINE = "http://www.americanwineryguide.com"
 
-  def self.scrape_go_wine_states
-    html = open('https://www.go-wine.com/us-wineries')
+  def self.scrape_states
+    html = open(WINE + '/regions/states/')
     doc = Nokogiri::HTML(html)
-    doc.css(".state").each do |state|
-      state.children[1].children.each do |name|
-        if name.name == "option"
-          state_name = name.text.to_s
-          state_value = name.attributes["value"].value
-          state = State.new(state_name, state_value)
-          state.save
-        end
+    doc.css("#states_box").each do |s|
+      s.css('a').each do |state|
+        name = state.text
+        url = state.attr("href")
+        new_state = State.new(name, url)
+        new_state.save
       end
     end
   end
 
-  def self.scrape_counties(state)
-    binding.pry
+  def self.scrape_wineries(state)
+    html = open(WINE + state.url)
+    doc = Nokogiri::HTML(html)
+    doc.css('p').each do |winery|
+      name = winery.text
+      binding.pry
+    end 
   end
 
 end

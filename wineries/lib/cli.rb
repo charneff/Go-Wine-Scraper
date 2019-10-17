@@ -10,7 +10,7 @@ class Cli
     puts "-----------------"
     puts "Which state are you in?"
     puts "    "
-    Scraper.scrape_go_wine_states
+    Scraper.scrape_states
     display_states
     menu
 
@@ -34,9 +34,9 @@ class Cli
       puts "I didn't understand that."
       puts "Try again, please."
       menu
-    elsif County.all == []
-      Scraper.scrape_counties(state)
+    elsif Winery.all == []
+      Scraper.scrape_wineries(state)
     end
-  end 
+  end
 
 end

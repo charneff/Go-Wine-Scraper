@@ -1,10 +1,10 @@
 class State
-  attr_accessor :state, :name, :value
+  attr_accessor :state, :name, :url
   @@all = []
 
-  def initialize(name, value)
+  def initialize(name, url)
     @name = name
-    @value = value
+    @url = url
   end
 
   def self.all
