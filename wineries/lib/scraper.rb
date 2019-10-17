@@ -39,7 +39,6 @@ class Scraper
       details = detail.css('a').text.split("\n")
       details.delete("")
       details.prepend(winery.name)
-      binding.pry
       info << {:details => details}
     end
     Information.create_from_collection(info)
