@@ -30,4 +30,16 @@ class Scraper
     end
   end
 
+  def self.scrape_winery_info(winery)
+    html = open(WINE + winery.url)
+    doc = Nokogiri::HTML(html)
+    info = []
+    doc.css('#winery_detail_box1a').each do |detail|
+      details = detail.css('a').text.split("\n")
+      details.delete("")
+      info << {:details => details}
+    end
+    Information.create_from_collection(info)
+  end
+
 end

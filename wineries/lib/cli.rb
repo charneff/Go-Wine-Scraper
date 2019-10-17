@@ -13,6 +13,14 @@ class Cli
     display_states
     menu
     display_wineries
+    winery_menu
+    display_information
+    information_menu
+  end
+
+  def error
+    puts "I didn't understand that."
+    puts "Try again, please."
   end
 
   def display_states
@@ -29,12 +37,12 @@ class Cli
     puts "      "
     input = gets.chomp
     puts "-----------------"
+    puts "      "
 
     state = State.all[input.to_i - 1]
 
     if !state
-      puts "I didn't understand that."
-      puts "Try again, please."
+      error
       menu
     elsif Winery.all == []
       Scraper.scrape_wineries(state)
@@ -48,7 +56,78 @@ class Cli
     Winery.all.each.with_index(1) do |winery, i|
       puts "#{i}. #{winery.name}"
     end
-    puts "       "
+    puts ""
+    puts "Please select a winery for more information."
+    puts "-----------------"
   end
+
+  def winery_menu
+    puts " "
+    puts "Type '*' for previous menu."
+    puts " "
+    puts "Type 'exit' to exit"
+    input = gets.chomp
+    puts "-----------------"
+    puts "  "
+
+    winery = Winery.all[input.to_i - 1]
+
+    if !winery
+      error
+      winery_menu
+    elsif input == '*'
+      Winery.all.clear
+      display_states
+      menu
+      display_wineries
+      winery_menu
+    elsif input == 'exit'
+      exit!
+    elsif Information.all == []
+      Scraper.scrape_winery_info(winery)
+    end
+  end
+
+  def display_information
+    puts " "
+    puts "Winery Information"
+    puts "------------------"
+    puts " "
+    Information.all.each do |info|
+      info.details.each do |p|
+        puts "#{p}"
+        puts ""
+      end
+    end
+    puts "-------------------"
+  end
+
+   def information_menu
+      puts "Type 'S' to return to a list of states."
+      puts "Type '*' to return to previous list of wineries."
+      puts "Type 'exit' to exit."
+      puts ""
+      input = gets.chomp
+      puts "-------------------"
+      puts " "
+
+      if input == "S"
+        Winery.all.clear
+        display_states
+        menu
+        display_wineries
+        winery_menu
+        display_information
+        information_menu
+      elsif input == '*'
+        Information.all.clear
+        display_wineries
+        winery_menu
+        display_information
+        information_menu
+      elsif input == 'exit'
+        exit!
+      end
+    end
 
 end
