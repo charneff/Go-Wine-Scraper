@@ -1,6 +1,7 @@
 #!/user/bin/env ruby
 
 require 'pry'
+require 'colorize'
 require 'open-uri'
 require 'nokogiri'
 require_relative '../lib/cli'

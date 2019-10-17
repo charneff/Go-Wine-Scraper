@@ -8,7 +8,7 @@ class Cli
     puts "    "
     puts "Welcome to Winery Finder"
     puts "-----------------"
-    puts "Which state are you in?"
+    puts "Where are you?"
     Scraper.scrape_states
     display_states
     menu
@@ -19,15 +19,15 @@ class Cli
   end
 
   def error
-    puts "I didn't understand that."
-    puts "Try again, please."
+    puts "I didn't understand that.".colorize(:red)
+    puts "Try again, please.".colorize(:red)
   end
 
   def display_states
     puts "       "
     puts "States:"
     State.all.each.with_index(1) do |state, i|
-      puts "#{i}. #{state.name}"
+      puts "#{i}. #{state.name}".colorize(:blue)
     end
   end
 
@@ -54,7 +54,7 @@ class Cli
     puts "Wineries:"
     puts "      "
     Winery.all.each.with_index(1) do |winery, i|
-      puts "#{i}. #{winery.name}"
+      puts "#{i}. #{winery.name}".colorize(:red)
     end
     puts ""
     puts "Please select a winery for more information."
@@ -95,7 +95,7 @@ class Cli
     puts " "
     Information.all.each do |info|
       info.details.each do |p|
-        puts "#{p}"
+        puts "#{p}".colorize(:green)
         puts ""
       end
     end
