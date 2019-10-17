@@ -41,6 +41,13 @@ class Scraper
       details.prepend(winery.name)
       info << {:details => details}
     end
+
+    doc.css('.winery_detail_box4').each do |detail|
+      detail.css('.formscroll p').each do |d|
+        details = d.text.strip
+        info[0][:details] << details
+      end
+    end
     Information.create_from_collection(info)
   end
 

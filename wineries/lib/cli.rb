@@ -5,17 +5,17 @@ require 'pry'
 class Cli
 
   def run
+    greeting
+    Scraper.scrape_states
+    cycle_menu
+    info_cycle
+  end
+
+  def greeting
     puts "    "
     puts "Welcome to Winery Finder"
     puts "-----------------"
     puts "Where are you?"
-    Scraper.scrape_states
-    display_states
-    menu
-    display_wineries
-    winery_menu
-    display_information
-    information_menu
   end
 
   def error
@@ -49,6 +49,18 @@ class Cli
     end
   end
 
+  def cycle_menu
+    display_states
+    menu
+    display_wineries
+    winery_menu
+  end
+
+  def info_cycle
+    display_information
+    information_menu
+  end
+
   def display_wineries
     puts "       "
     puts "Wineries:"
@@ -77,10 +89,7 @@ class Cli
       winery_menu
     elsif input == '*'
       Winery.all.clear
-      display_states
-      menu
-      display_wineries
-      winery_menu
+      cycle_menu
     elsif input == 'exit'
       exit!
     elsif Information.all == []
@@ -114,18 +123,13 @@ class Cli
       if input == "S"
         Winery.all.clear
         Information.all.clear
-        display_states
-        menu
-        display_wineries
-        winery_menu
-        display_information
-        information_menu
+        cycle_menu
+        info_cycle
       elsif input == '*'
         Information.all.clear
         display_wineries
         winery_menu
-        display_information
-        information_menu
+        info_cycle
       elsif input == 'exit'
         exit!
       end
