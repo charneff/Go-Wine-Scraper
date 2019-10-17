@@ -113,6 +113,7 @@ class Cli
 
       if input == "S"
         Winery.all.clear
+        Information.all.clear
         display_states
         menu
         display_wineries
