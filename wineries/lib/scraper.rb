@@ -38,7 +38,9 @@ class Scraper
     doc.css('#winery_detail_box1a').each do |detail|
       details = detail.css('a').text.split("\n")
       details.delete("")
+      details.pop
       details.prepend(winery.name)
+      binding.pry
       info << {:details => details}
     end
     Information.create_from_collection(info)
